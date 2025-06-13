@@ -16,6 +16,11 @@ return {
   },
   opts = {
     filesystem = {
+      filtered_items = {
+        visible = true, -- This is what you want: If you set this to `true`, all "hidden" files will be shown
+        hide_dotfiles = false,
+        hide_gitignored = false,
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',
@@ -23,5 +28,12 @@ return {
         },
       },
     },
-  }
+  },
+  init = function()
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        vim.cmd("Neotree filesystem left")
+      end,
+    })
+  end,
 }
