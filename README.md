@@ -236,3 +236,212 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 ```
 </details>
 
+# Neovim Configuration
+
+This is a personalized Neovim configuration based on kickstart.nvim.
+
+## Keybindings
+
+This configuration uses `<space>` as the leader key.
+
+### Global Keybindings
+
+| Keybinding | Description |
+| :--- | :--- |
+| `<Esc>` | Clear search highlights |
+| `<C-h>` | Move focus to the left window |
+| `<C-l>` | Move focus to the right window |
+| `<C-j>` | Move focus to the lower window |
+| `<C-k>` | Move focus to the upper window |
+| `<leader>q` | Open diagnostic Quickfix list |
+
+### Plugin Keybindings
+
+#### Alpha
+
+*Dashboard (Startify Theme)*
+
+The dashboard is shown on startup and has its own keybindings for navigating.
+
+#### Comment.nvim
+
+*Smart commenting*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `gcc` | Toggle comment line |
+| `gbc` | Toggle block comment |
+| `gc` | Comment selection (visual mode) |
+| `gb` | Block comment selection (visual mode) |
+
+#### Completion (nvim-cmp)
+
+*Autocompletion in insert mode*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `<C-n>` | Select next completion item |
+| `<C-p>` | Select previous completion item |
+| `<C-b>` | Scroll documentation backward |
+| `<C-f>` | Scroll documentation forward |
+| `<C-y>` | Confirm completion |
+| `<CR>` | Confirm completion |
+| `<Tab>` | Select next completion item |
+| `<S-Tab>` | Select previous completion item |
+| `<C-Space>` | Trigger completion |
+| `<C-l>` | Jump forward in a snippet |
+| `<C-h>` | Jump backward in a snippet |
+
+#### DAP (Debug Adapter Protocol)
+
+*Debugging keybindings*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `<leader>db` | Toggle Breakpoint |
+| `<leader>dc` | Continue |
+| `<leader>di` | Step Into |
+| `<leader>do` | Step Over |
+| `<leader>dO` | Step Out |
+| `<leader>dr` | Toggle REPL |
+| `<leader>dl` | Run Last |
+| `<leader>du` | Toggle UI |
+| `<F1>` | Step Into |
+| `<F2>` | Step Over |
+| `<F3>` | Step Out |
+| `<F5>` | Start/Continue |
+| `<F7>` | See last session result |
+
+#### Formatting
+
+*Code formatting*
+
+| Keybinding | Description | Plugin |
+| :--- | :--- | :--- |
+| `<leader>f` | Format buffer | `conform.nvim` |
+| `<leader>gf` | Format buffer (LSP) | `none-ls.nvim` |
+
+#### Gitsigns
+
+*Git integration in the gutter*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `]c` | Jump to next git change |
+| `[c` | Jump to previous git change |
+| `<leader>hs` | Stage hunk |
+| `<leader>hr` | Reset hunk |
+| `<leader>hS` | Stage buffer |
+| `<leader>hu` | Undo stage hunk |
+| `<leader>hR` | Reset buffer |
+| `<leader>hp` | Preview hunk |
+| `<leader>hb` | Blame line |
+| `<leader>hd` | Diff against index |
+| `<leader>hD` | Diff against last commit |
+| `<leader>tb` | Toggle git show blame line |
+| `<leader>tD` | Toggle git show Deleted |
+
+#### LazyGit
+
+*Terminal UI for Git*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `<leader>gg` | Open LazyGit |
+
+#### LSP (Language Server Protocol)
+
+*Code intelligence features*
+
+These keybindings are active in buffers with an attached Language Server.
+
+| Keybinding | Description |
+| :--- | :--- |
+| `gd` | Goto Definition |
+| `gr` | Goto References |
+| `gI` | Goto Implementation |
+| `<leader>D` | Type Definition |
+| `<leader>ds` | Document Symbols |
+| `<leader>ws` | Workspace Symbols |
+| `<leader>rn` | Rename |
+| `<leader>ca` | Code Action |
+| `gD` | Goto Declaration |
+| `<leader>th` | Toggle Inlay Hints |
+
+#### Mini.nvim
+
+*Text objects and surroundings*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `va)` | Visually select Around ()paren |
+| `yinq` | Yank Inside Next "Quote |
+| `ci'` | Change Inside 'quote |
+| `saiw)` | Surround Add Inner Word )Paren |
+| `sd'` | Surround Delete 'quotes |
+| `sr)'` | Surround Replace ) ' |
+
+#### Neo-tree
+
+*File explorer*
+
+| Keybinding | Description | Context |
+| :--- | :--- | :--- |
+| `\` | Reveal file in Neo-tree | Global |
+| `<C-b>` | Toggle Neo-tree | Global |
+| `\` | Close window | In Neo-tree |
+| `<C-b>` | Close window | In Neo-tree |
+
+#### Telescope
+
+*Fuzzy finder*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `<leader>sh` | Search Help |
+| `<leader>sk` | Search Keymaps |
+| `<leader>sf` | Search Files |
+| `<leader>ss` | Search Select Telescope |
+| `<leader>sw` | Search current Word |
+| `<leader>sg` | Search by Grep |
+| `<leader>sd` | Search Diagnostics |
+| `<leader>sr` | Search Resume |
+| `<leader>s.` | Search Recent Files ("." for repeat) |
+| `<leader><leader>` | Find existing buffers |
+| `<leader>/` | Fuzzily search in current buffer |
+| `<leader>s/` | Search in Open Files |
+| `<leader>sn` | Search Neovim files |
+| `<leader>p` | Find files with Telescope |
+
+#### Toggleterm
+
+*Embedded terminal*
+
+| Keybinding | Description |
+| :--- | :--- |
+| `<c-\>` | Toggle floating terminal |
+| `<leader>t` | Toggle floating terminal |
+| `t<Esc><Esc>` | Exit terminal mode |
+
+#### Treesitter
+
+*Text objects for text selection*
+
+These text objects are available for selection with operators like `v`, `d`, `y`, `c`.
+
+| Text Object | Description |
+| :--- | :--- |
+| `af` | Around function |
+| `if` | Inside function |
+| `ac` | Around class |
+| `ic` | Inside class |
+
+#### nvim-ts-autotag
+
+*Automatically add/rename closing HTML/XML tags.*
+
+This plugin works automatically in relevant filetypes (HTML, JSX, TSX, etc.) and has no default keybindings.
+
+---
+*This README was generated by an AI assistant.*
+
