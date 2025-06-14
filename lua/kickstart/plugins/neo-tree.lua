@@ -30,19 +30,5 @@ return {
     },
   },
   init = function()
-    vim.api.nvim_create_autocmd("VimEnter", {
-      desc = "Open Neo-tree if no files or only a directory is passed",
-      group = vim.api.nvim_create_augroup("kickstart-neotree-open", { clear = true }),
-      callback = function()
-        local arg_count = vim.fn.argc()
-        if arg_count == 0 then
-          -- No files passed, open Neo-tree
-          vim.cmd("Neotree filesystem left")
-        elseif arg_count == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
-          -- A single directory was passed, open Neo-tree
-          vim.cmd("Neotree filesystem left")
-        end
-      end,
-    })
   end,
 }

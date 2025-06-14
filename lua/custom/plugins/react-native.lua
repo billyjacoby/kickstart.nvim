@@ -42,7 +42,6 @@ return {
         "typescript",
         "javascriptreact",
         "typescriptreact",
-        "jsx",
         "tsx",
       },
     },
