@@ -3,7 +3,7 @@ return {
     'akinsho/toggleterm.nvim',
     version = '*',
     keys = {
-      { [[<c-\>]], '<cmd>ToggleTerm<cr>', desc = 'Toggle terminal' },
+      { '<C-`>', '<cmd>ToggleTerm<cr>', mode = { 'n', 'i', 't' }, desc = 'VS Code: Toggle Terminal' },
       { '<leader>t', '<cmd>ToggleTerm<cr>', desc = 'Toggle [T]erminal' },
     },
     opts = {
@@ -31,6 +31,14 @@ return {
   },
   {
     'mfussenegger/nvim-dap',
+    keys = {
+      { '<F5>', function() require('dap').continue() end, desc = 'VS Code: Start/Continue Debugging' },
+      { '<S-F5>', function() require('dap').terminate() end, desc = 'VS Code: Stop Debugging' },
+      { '<F9>', function() require('dap').toggle_breakpoint() end, desc = 'VS Code: Toggle Breakpoint' },
+      { '<F10>', function() require('dap').step_over() end, desc = 'VS Code: Step Over' },
+      { '<F11>', function() require('dap').step_into() end, desc = 'VS Code: Step Into' },
+      { '<S-F11>', function() require('dap').step_out() end, desc = 'VS Code: Step Out' },
+    },
     dependencies = {
       {
         'rcarriga/nvim-dap-ui',

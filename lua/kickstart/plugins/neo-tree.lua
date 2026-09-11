@@ -15,6 +15,7 @@ return {
   keys = {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
     { '<C-b>', ':Neotree filesystem toggle left<CR>', desc = 'NeoTree toggle', silent = true },
+    { '<C-S-e>', ':Neotree filesystem toggle left<CR>', desc = 'VS Code: Toggle Explorer', silent = true },
   },
   ---@module 'neo-tree'
   ---@type neotree.Config

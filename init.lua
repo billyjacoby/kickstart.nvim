@@ -241,6 +241,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Start new, target-less sessions from the projects directory and offer a
 -- project picker. Register this before lazy.nvim so it receives VimEnter.
 require('custom.project_picker').setup()
+require('custom.vscode').setup()
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
