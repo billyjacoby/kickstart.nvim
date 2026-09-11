@@ -17,28 +17,38 @@ A starting point for Neovim that is:
 Kickstart.nvim targets *only* the latest
 ['stable'](https://github.com/neovim/neovim/releases/tag/stable) and latest
 ['nightly'](https://github.com/neovim/neovim/releases/tag/nightly) of Neovim.
-If you are experiencing issues, please make sure you have the latest versions.
+If you are experiencing issues, please make sure you have at least the latest
+stable version. Most likely, you want to install neovim via a [package
+manager](https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-package).
+To check your neovim version, run `nvim --version` and make sure it is not
+below the latest
+['stable'](https://github.com/neovim/neovim/releases/tag/stable) version. If
+your chosen install method only gives you an outdated version of neovim, find
+alternative [installation methods below](#alternative-neovim-installation-methods).
 
 ### Install External Dependencies
 
 External Requirements:
 - Basic utils: `git`, `make`, `unzip`, C Compiler (`gcc`)
-- [ripgrep](https://github.com/BurntSushi/ripgrep#installation)
+- [ripgrep](https://github.com/BurntSushi/ripgrep#installation),
+  [fd-find](https://github.com/sharkdp/fd#installation)
+- [tree-sitter CLI](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md#installation)
 - Clipboard tool (xclip/xsel/win32yank or other depending on the platform)
 - A [Nerd Font](https://www.nerdfonts.com/): optional, provides various icons
   - if you have it set `vim.g.have_nerd_font` in `init.lua` to true
+- Emoji fonts (Ubuntu only, and only if you want emoji!) `sudo apt install fonts-noto-color-emoji`
 - Language Setup:
   - If you want to write Typescript, you need `npm`
   - If you want to write Golang, you will need `go`
   - etc.
 
-> **NOTE**
+> [!NOTE]
 > See [Install Recipes](#Install-Recipes) for additional Windows and Linux specific notes
 > and quick install snippets
 
 ### Install Kickstart
 
-> **NOTE**
+> [!NOTE]
 > [Backup](#FAQ) your previous configuration (if any exists)
 
 Neovim's configurations are located under the following paths, depending on your OS:
@@ -55,7 +65,7 @@ Neovim's configurations are located under the following paths, depending on your
 so that you have your own copy that you can modify, then install by cloning the
 fork to your machine using one of the commands below, depending on your OS.
 
-> **NOTE**
+> [!NOTE]
 > Your fork's URL will be something like this:
 > `https://github.com/<your_github_username>/kickstart.nvim.git`
 
@@ -64,7 +74,8 @@ too - it's ignored in the kickstart repo to make maintenance easier, but it's
 [recommended to track it in version control](https://lazy.folke.io/usage/lockfile).
 
 #### Clone kickstart.nvim
-> **NOTE**
+
+> [!NOTE]
 > If following the recommended step above (i.e., forking the repo), replace
 > `nvim-lua` with `<your_github_username>` in the commands below
 
@@ -151,7 +162,7 @@ examples of adding popularly requested plugins.
 
 Below you can find OS specific install instructions for Neovim and dependencies.
 
-After installing all the dependencies continue with the [Install Kickstart](#Install-Kickstart) step.
+After installing all the dependencies continue with the [Install Kickstart](#install-kickstart) step.
 
 #### Windows Installation
 
@@ -182,7 +193,7 @@ winget install --accept-source-agreements chocolatey.chocolatey
 2. install all requirements using choco, exit the previous cmd and
 open a new one so that choco path is set, and run in cmd as **admin**:
 ```
-choco install -y neovim git ripgrep wget fd unzip gzip mingw make
+choco install -y neovim git ripgrep wget fd unzip gzip mingw make tree-sitter
 ```
 </details>
 <details><summary>WSL (Windows Subsystem for Linux)</summary>
@@ -192,7 +203,7 @@ wsl --install
 wsl
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
-sudo apt install make gcc ripgrep unzip git xclip neovim
+sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip neovim
 ```
 </details>
 
@@ -202,246 +213,111 @@ sudo apt install make gcc ripgrep unzip git xclip neovim
 ```
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
-sudo apt install make gcc ripgrep unzip git xclip neovim
+sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip neovim
 ```
 </details>
 <details><summary>Debian Install Steps</summary>
 
 ```
 sudo apt update
-sudo apt install make gcc ripgrep unzip git xclip curl
+sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip curl
 
 # Now we install nvim
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-sudo rm -rf /opt/nvim-linux64
-sudo mkdir -p /opt/nvim-linux64
-sudo chmod a+rX /opt/nvim-linux64
-sudo tar -C /opt -xzf nvim-linux64.tar.gz
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim-linux-x86_64
+sudo mkdir -p /opt/nvim-linux-x86_64
+sudo chmod a+rX /opt/nvim-linux-x86_64
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
 # make it available in /usr/local/bin, distro installs to /usr/bin
-sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/
+sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/
 ```
 </details>
 <details><summary>Fedora Install Steps</summary>
 
 ```
-sudo dnf install -y gcc make git ripgrep fd-find unzip neovim
+sudo dnf install -y gcc make git ripgrep fd-find tree-sitter-cli unzip neovim
 ```
 </details>
 
 <details><summary>Arch Install Steps</summary>
 
 ```
-sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
+sudo pacman -S --noconfirm --needed gcc make git ripgrep fd tree-sitter-cli unzip neovim
 ```
 </details>
 
-# Neovim Configuration
+### Alternative neovim installation methods
 
-This is a personalized Neovim configuration based on kickstart.nvim.
+For some systems it is not unexpected that the [package manager installation
+method](https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-package)
+recommended by neovim is significantly behind. If that is the case for you,
+pick one of the following methods that are known to deliver fresh neovim versions very quickly.
+They have been picked for their popularity and because they make installing and updating
+neovim to the latest versions easy. You can also find more detail about the
+available methods being discussed
+[here](https://github.com/nvim-lua/kickstart.nvim/issues/1583).
 
-## Keybindings
 
-This configuration uses `<space>` as the leader key.
+<details><summary>Bob</summary>
 
-### Global Keybindings
+[Bob](https://github.com/MordechaiHadad/bob) is a Neovim version manager for
+all platforms. Simply install
+[rustup](https://rust-lang.github.io/rustup/installation/other.html),
+and run the following commands:
 
-| Keybinding | Description |
-| :--- | :--- |
-| `<Esc>` | Clear search highlights |
-| `<C-h>` | Move focus to the left window |
-| `<C-l>` | Move focus to the right window |
-| `<C-j>` | Move focus to the lower window |
-| `<C-k>` | Move focus to the upper window |
-| `<leader>q` | Open diagnostic Quickfix list |
+```bash
+rustup default stable
+rustup update stable
+cargo install bob-nvim
+bob use stable
+```
 
-### Plugin Keybindings
+</details>
 
-#### Alpha
+<details><summary>Homebrew</summary>
 
-*Dashboard (Startify Theme)*
+[Homebrew](https://brew.sh) is a package manager popular on Mac and Linux.
+Simply install using [`brew install`](https://formulae.brew.sh/formula/neovim).
 
-The dashboard is shown on startup and has its own keybindings for navigating.
+</details>
 
-#### Comment.nvim
+<details><summary>Flatpak</summary>
 
-*Smart commenting*
+Flatpak is a package manager for applications that allows developers to package their applications
+just once to make it available on all Linux systems. Simply [install flatpak](https://flatpak.org/setup/)
+and setup [flathub](https://flathub.org/setup) to [install neovim](https://flathub.org/apps/io.neovim.nvim).
 
-| Keybinding | Description |
-| :--- | :--- |
-| `gcc` | Toggle comment line |
-| `gbc` | Toggle block comment |
-| `gc` | Comment selection (visual mode) |
-| `gb` | Block comment selection (visual mode) |
+</details>
 
-#### Completion (nvim-cmp)
+<details><summary>asdf and mise-en-place</summary>
 
-*Autocompletion in insert mode*
+[asdf](https://asdf-vm.com/) and [mise](https://mise.jdx.dev/) are tool version managers,
+mostly aimed towards project-specific tool versioning. However both support managing tools
+globally in the user-space as well:
 
-| Keybinding | Description |
-| :--- | :--- |
-| `<C-n>` | Select next completion item |
-| `<C-p>` | Select previous completion item |
-| `<C-b>` | Scroll documentation backward |
-| `<C-f>` | Scroll documentation forward |
-| `<C-y>` | Confirm completion |
-| `<CR>` | Confirm completion |
-| `<Tab>` | Select next completion item |
-| `<S-Tab>` | Select previous completion item |
-| `<C-Space>` | Trigger completion |
-| `<C-l>` | Jump forward in a snippet |
-| `<C-h>` | Jump backward in a snippet |
+<details><summary>mise</summary>
 
-#### DAP (Debug Adapter Protocol)
+[Install mise](https://mise.jdx.dev/getting-started.html), then run:
 
-*Debugging keybindings*
+```bash
+mise plugins install neovim
+mise use neovim@stable
+```
 
-| Keybinding | Description |
-| :--- | :--- |
-| `<leader>db` | Toggle Breakpoint |
-| `<leader>dc` | Continue |
-| `<leader>di` | Step Into |
-| `<leader>do` | Step Over |
-| `<leader>dO` | Step Out |
-| `<leader>dr` | Toggle REPL |
-| `<leader>dl` | Run Last |
-| `<leader>du` | Toggle UI |
-| `<F1>` | Step Into |
-| `<F2>` | Step Over |
-| `<F3>` | Step Out |
-| `<F5>` | Start/Continue |
-| `<F7>` | See last session result |
+</details>
 
-#### Formatting
+<details><summary>asdf</summary>
 
-*Code formatting*
+[Install asdf](https://asdf-vm.com/guide/getting-started.html), then run:
 
-| Keybinding | Description | Plugin |
-| :--- | :--- | :--- |
-| `<leader>f` | Format buffer | `conform.nvim` |
-| `<leader>gf` | Format buffer (LSP) | `none-ls.nvim` |
+```bash
+asdf plugin add neovim
+asdf install neovim stable
+asdf set neovim stable --home
+asdf reshim neovim
+```
 
-#### Gitsigns
+</details>
 
-*Git integration in the gutter*
-
-| Keybinding | Description |
-| :--- | :--- |
-| `]c` | Jump to next git change |
-| `[c` | Jump to previous git change |
-| `<leader>hs` | Stage hunk |
-| `<leader>hr` | Reset hunk |
-| `<leader>hS` | Stage buffer |
-| `<leader>hu` | Undo stage hunk |
-| `<leader>hR` | Reset buffer |
-| `<leader>hp` | Preview hunk |
-| `<leader>hb` | Blame line |
-| `<leader>hd` | Diff against index |
-| `<leader>hD` | Diff against last commit |
-| `<leader>tb` | Toggle git show blame line |
-| `<leader>tD` | Toggle git show Deleted |
-
-#### LazyGit
-
-*Terminal UI for Git*
-
-| Keybinding | Description |
-| :--- | :--- |
-| `<leader>gg` | Open LazyGit |
-
-#### LSP (Language Server Protocol)
-
-*Code intelligence features*
-
-These keybindings are active in buffers with an attached Language Server.
-
-| Keybinding | Description |
-| :--- | :--- |
-| `gd` | Goto Definition |
-| `gr` | Goto References |
-| `gI` | Goto Implementation |
-| `<leader>D` | Type Definition |
-| `<leader>ds` | Document Symbols |
-| `<leader>ws` | Workspace Symbols |
-| `<leader>rn` | Rename |
-| `<leader>ca` | Code Action |
-| `gD` | Goto Declaration |
-| `<leader>th` | Toggle Inlay Hints |
-
-#### Mini.nvim
-
-*Text objects and surroundings*
-
-| Keybinding | Description |
-| :--- | :--- |
-| `va)` | Visually select Around ()paren |
-| `yinq` | Yank Inside Next "Quote |
-| `ci'` | Change Inside 'quote |
-| `saiw)` | Surround Add Inner Word )Paren |
-| `sd'` | Surround Delete 'quotes |
-| `sr)'` | Surround Replace ) ' |
-
-#### Neo-tree
-
-*File explorer*
-
-| Keybinding | Description | Context |
-| :--- | :--- | :--- |
-| `\` | Reveal file in Neo-tree | Global |
-| `<C-b>` | Toggle Neo-tree | Global |
-| `\` | Close window | In Neo-tree |
-| `<C-b>` | Close window | In Neo-tree |
-
-#### Telescope
-
-*Fuzzy finder*
-
-| Keybinding | Description |
-| :--- | :--- |
-| `<leader>sh` | Search Help |
-| `<leader>sk` | Search Keymaps |
-| `<leader>sf` | Search Files |
-| `<leader>ss` | Search Select Telescope |
-| `<leader>sw` | Search current Word |
-| `<leader>sg` | Search by Grep |
-| `<leader>sd` | Search Diagnostics |
-| `<leader>sr` | Search Resume |
-| `<leader>s.` | Search Recent Files ("." for repeat) |
-| `<leader><leader>` | Find existing buffers |
-| `<leader>/` | Fuzzily search in current buffer |
-| `<leader>s/` | Search in Open Files |
-| `<leader>sn` | Search Neovim files |
-| `<leader>p` | Find files with Telescope |
-
-#### Toggleterm
-
-*Embedded terminal*
-
-| Keybinding | Description |
-| :--- | :--- |
-| `<c-\>` | Toggle floating terminal |
-| `<leader>t` | Toggle floating terminal |
-| `t<Esc><Esc>` | Exit terminal mode |
-
-#### Treesitter
-
-*Text objects for text selection*
-
-These text objects are available for selection with operators like `v`, `d`, `y`, `c`.
-
-| Text Object | Description |
-| :--- | :--- |
-| `af` | Around function |
-| `if` | Inside function |
-| `ac` | Around class |
-| `ic` | Inside class |
-
-#### nvim-ts-autotag
-
-*Automatically add/rename closing HTML/XML tags.*
-
-This plugin works automatically in relevant filetypes (HTML, JSX, TSX, etc.) and has no default keybindings.
-
----
-*This README was generated by an AI assistant.*
-
+</details>
